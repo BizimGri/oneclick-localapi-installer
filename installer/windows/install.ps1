@@ -130,6 +130,26 @@ if (-not (Test-Path $SourcePath)) {
     throw "Publish klasörü bulunamadı: $SourcePath"
 }
 
+# Stop service before file copy to avoid locked runtime binaries during upgrade.
+$existingBeforeCopy = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
+if ($null -ne $existingBeforeCopy) {
+    if ($existingBeforeCopy.Status -ne 'Stopped') {
+        Stop-Service -Name $ServiceName -Force -ErrorAction SilentlyContinue
+    }
+
+    $maxWaitSec = 20
+    $elapsed = 0
+    while ($elapsed -lt $maxWaitSec) {
+        $svc = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
+        if ($null -eq $svc -or $svc.Status -eq 'Stopped') {
+            break
+        }
+
+        Start-Sleep -Seconds 1
+        $elapsed++
+    }
+}
+
 New-Item -ItemType Directory -Path $InstallPath -Force | Out-Null
 Copy-Item -Path "$SourcePath\*" -Destination $InstallPath -Recurse -Force
 
