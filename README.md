@@ -201,6 +201,8 @@ Tek seferde tum surec (onerilen):
 ./installer/linux/oneclick-install.sh
 ```
 
+Not: Linux'ta kurulum root yetkisi gerektirir; script gerekli noktada sudo ister.
+
 Opsiyonel parametreler:
 
 ```bash
@@ -249,6 +251,8 @@ Tek seferde tum surec (onerilen):
 ./installer/macos/oneclick-install.sh
 ```
 
+Not: macOS'ta komutu sudo ile baslatmak zorunlu degildir; script root gerektiren adimlarda sudo ile sifre ister.
+
 Opsiyonel parametreler:
 
 ```bash
@@ -288,6 +292,18 @@ Alternatif manuel:
 ```bash
 sudo ./installer/macos/uninstall.sh
 ```
+
+## Test Edilen Ortamlar
+
+- Windows ARM64
+- Linux (Ubuntu Server)
+- macOS
+
+Kurulum notlari:
+
+- Windows ARM64: one-click akisi ile kurulum ve uninstall dogrulandi.
+- Linux (Ubuntu Server): kurulum adimlari root yetkisi gerektirir (sudo zorunlu).
+- macOS: komutu sudo ile baslatmak zorunlu degildir; script root gerektiren adimlarda sudo ile sifre ister.
 
 ## Güvenlik Notu
 
