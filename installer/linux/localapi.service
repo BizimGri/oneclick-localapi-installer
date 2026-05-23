@@ -1,0 +1,15 @@
+[Unit]
+Description=LocalApi Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/localapi
+ExecStart=/opt/localapi/LocalApi
+Restart=always
+RestartSec=5
+EnvironmentFile=/etc/default/localapi
+User=root
+
+[Install]
+WantedBy=multi-user.target

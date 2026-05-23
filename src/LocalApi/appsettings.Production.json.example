@@ -1,0 +1,15 @@
+{
+  "DatabaseProvider": "Sqlite",
+  "ConnectionStrings": {
+    "SqlServer": "Server=YOUR_SQLSERVER;Database=LocalApiDb;User Id=YOUR_USER;Password=YOUR_PASSWORD;TrustServerCertificate=True;",
+    "PostgreSql": "Host=YOUR_POSTGRES_HOST;Port=5432;Database=localapidb;Username=YOUR_USER;Password=YOUR_PASSWORD;",
+    "Sqlite": "Data Source=/var/lib/localapi/localapi.db"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
