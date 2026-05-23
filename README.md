@@ -18,6 +18,7 @@ Bu repository, tek API kod tabanını Windows/Linux/macOS üzerinde çalıştır
 - `installer/linux`: Linux kurulum ve kaldırma
 - `installer/macos`: macOS kurulum ve kaldırma
 - `scripts`: publish scriptleri
+- `bootstrap`: git clone/pull + platforma uygun one-click kurulum
 
 ## API Endpointleri
 
@@ -50,6 +51,44 @@ Seed:
 - Kalem - 15
 - Defter - 45
 - Kitap - 120
+
+
+## Gitten Tek Komut Kurulum
+
+Yeni bir makinede dosya tasimadan kurmak icin:
+
+### Linux/macOS
+
+```bash
+./bootstrap/install.sh
+```
+
+Opsiyonel (repo veya hedef klasor override):
+
+```bash
+./bootstrap/install.sh https://github.com/BizimGri/oneclick-localapi-installer.git ./bootstrap/oneclick-localapi-installer
+```
+
+### Windows
+
+Tek tik (onerilen):
+
+```bat
+bootstrap\install.cmd
+```
+
+Alternatif PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\bootstrap\install.ps1
+```
+
+Bu komutlar:
+
+- git yoksa platforma uygun sekilde otomatik kurmayi dener
+- Repo yoksa clone eder
+- Repo varsa pull --ff-only ile gunceller
+- Sonra ilgili platformun one-click installer'ini calistirir
 
 ## Publish
 
