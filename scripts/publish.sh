@@ -9,6 +9,14 @@ command_exists() { command -v "$1" >/dev/null 2>&1; }
 
 install_dotnet_sdk_linux() {
   if command_exists apt-get; then
+    if [[ ! -f /etc/apt/sources.list.d/microsoft-prod.list ]]; then
+      . /etc/os-release
+      apt-get update
+      apt-get install -y wget gpg
+      wget -q "https://packages.microsoft.com/config/${ID}/${VERSION_ID}/packages-microsoft-prod.deb" -O /tmp/packages-microsoft-prod.deb
+      dpkg -i /tmp/packages-microsoft-prod.deb
+      rm -f /tmp/packages-microsoft-prod.deb
+    fi
     apt-get update
     apt-get install -y dotnet-sdk-8.0
   elif command_exists dnf; then
