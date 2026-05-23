@@ -18,7 +18,20 @@ install_dotnet_sdk_linux() {
       rm -f /tmp/packages-microsoft-prod.deb
     fi
     apt-get update
-    apt-get install -y dotnet-sdk-8.0
+    if apt-cache show dotnet-sdk-8.0 >/dev/null 2>&1; then
+      apt-get install -y dotnet-sdk-8.0
+      return 0
+    fi
+
+    local sdk_pkg
+    sdk_pkg="$(apt-cache search '^dotnet-sdk-[0-9]+\.0$' | awk '{print $1}' | sort -V | tail -n 1)"
+    if [[ -n "$sdk_pkg" ]]; then
+      echo "dotnet-sdk-8.0 bulunamadi, uygun surum kuruluyor: $sdk_pkg"
+      apt-get install -y "$sdk_pkg"
+      return 0
+    fi
+
+    return 1
   elif command_exists dnf; then
     dnf install -y dotnet-sdk-8.0
   elif command_exists yum; then
