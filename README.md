@@ -59,7 +59,7 @@ Seed:
 ./scripts/publish.sh
 ```
 
-`publish.sh` dotnet SDK yoksa otomatik kurmayı dener (Linux'ta root + paket yöneticisi, macOS'ta Homebrew).
+`publish.sh` dotnet SDK yoksa otomatik kurmayı dener (Linux'ta gerekirse sudo ile kendini yeniden calistirir, macOS'ta Homebrew kullanir).
 
 ### Windows
 

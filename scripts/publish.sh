@@ -39,8 +39,8 @@ ensure_dotnet_sdk() {
     fi
   elif [[ "$uname_s" == "Linux" ]]; then
     if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
-      echo "Linux'ta otomatik SDK kurulumu icin scripti root calistirin veya once dotnet kurun." >&2
-      return 1
+      echo "Linux'ta SDK kurulumu icin sudo gerekiyor. Otomatik olarak sudo ile yeniden calistiriliyor..."
+      exec sudo -E bash "$0"
     fi
     install_dotnet_sdk_linux || {
       echo "dotnet SDK otomatik kurulamadi. Manuel kurulum: https://learn.microsoft.com/dotnet/core/install/linux" >&2
