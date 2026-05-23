@@ -89,6 +89,7 @@ Bu komutlar:
 - Repo yoksa clone eder
 - Repo varsa pull --ff-only ile gunceller
 - Sonra ilgili platformun one-click installer'ini calistirir
+- Varsayilan bootstrap hedef klasoru kullaniyorsa kurulum sonrasi bu gecici klasoru otomatik siler
 
 ## Publish
 

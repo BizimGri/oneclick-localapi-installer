@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 REPO_URL="${1:-https://github.com/BizimGri/oneclick-localapi-installer.git}"
 TARGET_DIR="${2:-$SCRIPT_DIR/oneclick-localapi-installer}"
+DEFAULT_TARGET_DIR="$SCRIPT_DIR/oneclick-localapi-installer"
 
 command_exists() { command -v "$1" >/dev/null 2>&1; }
 
@@ -70,26 +71,33 @@ else
   git clone "$REPO_URL" "$TARGET_DIR"
 fi
 
-cd "$TARGET_DIR"
-
 uname_s="$(uname -s)"
 case "$uname_s" in
   Linux)
-    chmod +x installer/linux/*.sh scripts/publish.sh
+    chmod +x "$TARGET_DIR"/installer/linux/*.sh "$TARGET_DIR"/scripts/publish.sh
     if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
-      exec sudo -E ./installer/linux/oneclick-install.sh
+      sudo -E "$TARGET_DIR"/installer/linux/oneclick-install.sh
+    else
+      "$TARGET_DIR"/installer/linux/oneclick-install.sh
     fi
-    exec ./installer/linux/oneclick-install.sh
     ;;
   Darwin)
-    chmod +x installer/macos/*.sh scripts/publish.sh
+    chmod +x "$TARGET_DIR"/installer/macos/*.sh "$TARGET_DIR"/scripts/publish.sh
     if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
-      exec sudo -E ./installer/macos/oneclick-install.sh
+      sudo -E "$TARGET_DIR"/installer/macos/oneclick-install.sh
+    else
+      "$TARGET_DIR"/installer/macos/oneclick-install.sh
     fi
-    exec ./installer/macos/oneclick-install.sh
     ;;
   *)
     echo "Bu script yalnizca Linux/macOS icin tasarlandi. Windows icin bootstrap/install.ps1 kullanin." >&2
     exit 1
     ;;
 esac
+
+if [[ "$TARGET_DIR" == "$DEFAULT_TARGET_DIR" ]]; then
+  echo "[STEP] Gecici bootstrap klasoru temizleniyor: $TARGET_DIR"
+  rm -rf "$TARGET_DIR"
+fi
+
+echo "[OK] Bootstrap kurulumu tamamlandi."

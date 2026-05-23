@@ -57,6 +57,8 @@ function Ensure-Git {
     }
 }
 
+$defaultTargetDir = Join-Path $PSScriptRoot "oneclick-localapi-installer"
+
 if (-not (Test-Admin)) {
     Relaunch-Elevated
     exit 0
@@ -82,6 +84,11 @@ Write-Host "[STEP] Windows one-click install calistiriliyor..."
 & $installer
 if ($LASTEXITCODE -ne 0) {
     throw "Kurulum basarisiz."
+}
+
+if ($TargetDir -eq $defaultTargetDir -and (Test-Path $TargetDir)) {
+    Write-Host "[STEP] Gecici bootstrap klasoru temizleniyor: $TargetDir"
+    Remove-Item -Path $TargetDir -Recurse -Force
 }
 
 Write-Host "[OK] Kurulum tamamlandi."
